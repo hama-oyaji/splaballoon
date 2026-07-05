@@ -6,192 +6,318 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
 
         <title>スプラバルーン：イベントインフォメーション</title>
 
-        <style type="text/css">
+        <style>
+            :root {
+                --accent: #7a4171;
+                --accent-light: #f3e8f2;
+                --dot-active: #7a4171;
+                --dot-past: #ccc;
+                --line-color: #e2e8f0;
+            }
+
+            body {
+                font-family: 'Noto Sans JP', sans-serif;
+                background: #f8f9fc;
+                color: #333;
+            }
+
+            /* ── Hero banner ── */
+            .hero {
+                background: linear-gradient(135deg, #7a4171 0%, #b06ba8 100%);
+                border-radius: 1rem;
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+                box-shadow: 0 4px 20px rgba(122, 65, 113, 0.25);
+            }
+
+            /* ── Latest card ── */
+            .card-latest {
+                border: none;
+                border-left: 4px solid var(--accent);
+                border-radius: 0.75rem;
+                background: #fff;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+                padding: 1.5rem 1.75rem;
+                margin-bottom: 2rem;
+            }
+            .card-latest .badge-new {
+                background: var(--accent);
+                color: #fff;
+                font-size: 0.7rem;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                padding: 0.25em 0.65em;
+                border-radius: 999px;
+                vertical-align: middle;
+                margin-right: 0.5rem;
+            }
+            .card-latest .entry-title {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #1a1a2e;
+                margin-bottom: 0.25rem;
+            }
+            .card-latest .entry-date {
+                font-size: 0.82rem;
+                color: #888;
+                font-weight: 500;
+                margin-bottom: 0.75rem;
+            }
+            .card-latest .entry-body {
+                font-size: 0.95rem;
+                color: #444;
+                line-height: 1.8;
+            }
+
+            /* ── Past section toggle button ── */
+            .past-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 0;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 1.25rem;
+            }
+            .past-toggle .toggle-line {
+                flex: 1;
+                height: 1px;
+                background: var(--line-color);
+            }
+            .past-toggle .toggle-label {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #999;
+                white-space: nowrap;
+                letter-spacing: 0.04em;
+            }
+            .past-toggle .toggle-icon {
+                font-size: 0.75rem;
+                color: #bbb;
+                transition: transform 0.25s;
+            }
+            .past-toggle[aria-expanded="true"] .toggle-icon {
+                transform: rotate(180deg);
+            }
+
+            /* ── Past timeline ── */
             .timeline {
-                border-left: 1px solid hsl(0, 0%, 90%);
-                position: relative;
+                border-left: 2px solid var(--line-color);
                 list-style: none;
+                padding-left: 1.75rem;
+                margin: 0;
             }
-
-            .timeline .timeline-item {
+            .timeline-item {
                 position: relative;
+                padding-bottom: 1.75rem;
             }
-
-            .timeline .timeline-item:after {
-                position: absolute;
-                display: block;
-                top: 0;
-            }
-
-            .timeline .timeline-item:after {
-                background-color: hsl(0, 0%, 90%);
-                left: -38px;
-                border-radius: 50%;
-                height: 11px;
-                width: 11px;
+            .timeline-item::before {
                 content: '';
+                position: absolute;
+                left: -2.25rem;
+                top: 0.35rem;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--dot-past);
+                border: 2px solid #fff;
+                box-shadow: 0 0 0 2px var(--dot-past);
             }
-            .timeline .separator{
-                background-color:#7a4171;
-                color:#fff;
+            .timeline-item .entry-title {
+                font-size: 0.92rem;
+                font-weight: 600;
+                color: #666;
+                margin-bottom: 0.15rem;
+            }
+            .timeline-item .entry-date {
+                font-size: 0.78rem;
+                color: #aaa;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
+            .timeline-item .entry-body {
+                font-size: 0.87rem;
+                color: #888;
+                line-height: 1.75;
+            }
+            .timeline-item .btn-sm {
+                font-size: 0.82rem;
+                margin-top: 0.5rem;
             }
         </style>
     </head>
     <body>
-        <div class="container">
-          <div class="alert alert-info" role="alert">
-            <img src="splaballoon_banner.svg" class="img-fluid" alt="スプラバルーン2025　イベントインフォメーション">
-          </div>
-            <!-- Section: Timeline -->
-            <section class="py-5">
+        <div class="container py-4" style="max-width:720px;">
+
+            <!-- Hero -->
+            <div class="hero text-center">
+                <img src="splaballoon_banner.svg" class="img-fluid" style="max-height:120px;" alt="スプラバルーン　イベントインフォメーション">
+            </div>
+
+            <!-- Latest entry (card) -->
+            <div class="card-latest">
+                <div class="entry-title">
+                    <span class="badge-new">NEW</span>2026年のスプラバルーンは山王台小学校で開催だ！
+                </div>
+                <div class="entry-date">2025年07月06日</div>
+                <div class="entry-body">
+                    毎年大好評のスプラバルーン。磯子の丘にある3小学校が水風船で覇権を競う大会。今回は山王台小学校が会場で2026年8月22日開催です。<br>
+                    このページは万が一のため(メール連絡ができない等)の連絡用ページです。通常の連絡は参加登録時にご記入いただいたメールアドレス宛にお送りしますので、ご確認お願いします。
+                </div>
+            </div>
+
+            <!-- Past info toggle -->
+            <button class="past-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#pastItems" aria-expanded="false" aria-controls="pastItems">
+                <span class="toggle-line"></span>
+                <span class="toggle-label">過去の情報を表示</span>
+                <span class="toggle-icon">▼</span>
+                <span class="toggle-line"></span>
+            </button>
+
+            <!-- Past entries (collapsed by default) -->
+            <div class="collapse" id="pastItems">
                 <ul class="timeline">
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">2026年のスプラバルーンは山王台小学校で開催だ！</h5>
-                        <p class="text-muted mb-2 fw-bold">2025年07月06日</p>
-                        <p class="text-muted">
-                            毎年大好評のスプラバルーン。磯子の丘にある3小学校が水風船で覇権を競う大会。今回は山王台小学校が会場で2026年8月22日開催です。
-                            このページは万が一のため(メール連絡ができない等)の連絡用ページです。通常の連絡は参加登録時にご記入いただいたメールアドレス宛にお送りしますので、ご確認お願いします。
-                        </p>
-                    </li>
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold separator">ここからは過去の情報です。</h5>
-                    </li>
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">ご参加ありがとうございました</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年08月10日</p>
-                        <p class="text-muted">
-                          ご参加いただいたた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
-                          限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
-                          また来年お会いしましょう！
-                        </p>
-                    </li>
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">2025年版参加者用ガイドブックを作成しました</h5>
-                        <p class="text-muted mb-2 fw-bold">2025年07月31日</p>
-                        <p class="text-muted">
-                          台風が心配されましたが、どうにか天候は保ちそうですね。スプラバルーン2025参加者向けのガイドブックを作成しました。
-                          スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
-                          ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
-                        　特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
-                        　ご協力をお願いします。
-                          <div class="d-grid gap-2">
-                            <a class="btn btn-primary" href="splaballoon2025-guidebook.pdf" role="button">2005ガイドブックのダウンロード</a>
-                          </div>
-                        </p>
-                    </li>
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">2025年もスプラバルーン開催を決定しました。</h5>
-                        <p class="text-muted mb-2 fw-bold">2025年06月15日</p>
-                        <p class="text-muted">
-                            毎年大好評のスプラバルーン。今年は何と山王台小学校が参戦します。磯子の丘にある3小学校が水風船で覇権を競う大会。今回は汐見台小学校が会場です。
-                        </p>
-                    </li>
-                   <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">ご参加ありがとうございました</h5>
-                        <p class="text-muted mb-2 fw-bold">2028年08月日10日</p>
-                        <p class="text-muted">
-                          ご参加いただいたた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
-                          限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
-                          また来年お会いしましょう！
-                        </p>
-                    </li>
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">2024年版参加者用ガイドブックを作成しました</h5>
-                        <p class="text-muted mb-2 fw-bold">2024年08月01日</p>
-                        <p class="text-muted">
-                          週末の天気はいまのところ良さそうですね。スプラバルーン2024参加者向けのガイドブックを作成しました。
-                          スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
-                          ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
-                        　特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
-                        　ご協力をお願いします。
-                          <div class="d-grid gap-2">
-                            <a class="btn btn-primary" href="splaballoon2024-guidebook.pdf" role="button">ガイドブックのダウンロード</a>
-                          </div>
-                        </p>
-                    </li>
-                    
-                   <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">参加者の皆さんをメーリングリストに追加しました。</h5>
-                        <p class="text-muted mb-2 fw-bold">2024年06月15日</p>
-                        <p class="text-muted">
-                            各種連絡用にメーリングリストに参加者の皆様を追加しました。当日に向けて情報を色々と流しますので、ご確認よろしくお願いします。今年はなんと170名を超える参加者がいます！
-                        </p>
-                    </li>
-                    
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">2024年もスプラバルーン開催を決定しました。</h5>
-                        <p class="text-muted mb-2 fw-bold">2024年06月15日</p>
-                        <p class="text-muted">
-                            昨年大好評のスプラバルーン。今年もやります！詳しくは浜小・汐小からのお知らせをご覧ください。このページでは
-                            イベントに関する最新情報をお知らせします。また過去の情報も掲載していますので、参考までに、ご覧ください。
-                        </p>
-                    </li>                    
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">ご参加ありがとうございました</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年08月25日</p>
-                        <p class="text-muted">
-                          ご参加いただいたた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
-                          限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
-                          また来年お会いしましょう！
-                        </p>
-                    </li>
-                    
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">参加者用ガイドブックを作成しました</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年08月16日</p>
-                        <p class="text-muted">
-                          週末の天気はいまのところ良さそうですね。スプラバルーン2023参加者向けのガイドブックを作成しました。
-                          スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
-                          ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
-                        　特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
-                        　ご協力をお願いします。
-                          <div class="d-grid gap-2">
-                            <a class="btn btn-primary" href="splaballoon2023-guidebook.pdf" role="button">ガイドブックのダウンロード</a>
-                          </div>
-                        </p>
-                    </li>
-                    
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">参加募集中止中です</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年07月25日</p>
-                        <p class="text-muted">
-                          ご登録の皆様ありがとうございます。現在、想定を大幅に上回る参加登録をいただいております。小学生向けのイベントですので、参加したい皆さんが参加できるイベントを目指しておりましたが、90人を超えましたので、会場のキャパシティーの観点から、大変申し訳ございませんが、参加登録を中止とさせていただいております。
-                        </p>
-                    </li>
-                    
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">参加募集開始</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年07月14日</p>
-                        <p class="text-muted">
-                          2023年『スプラバルーン@ぶたパーク』の参加募集を開始しました。このページでは、イベントに関する情報を随時発信していきます。申し込み時にご記入のメールアドレスにも重要な連絡をしますが、メール不着の場合も考えられますので、こちらのページのブックマークもお願いします。
-                        </p>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">ご参加ありがとうございました</div>
+                        <div class="entry-date">2023年08月10日</div>
+                        <div class="entry-body">
+                            ご参加いただいた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
+                            限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
+                            また来年お会いしましょう！
+                        </div>
                     </li>
 
-                    <li class="timeline-item mb-5">
-                        <h5 class="fw-bold">スプラバルーン@ぶたパーク開催決定！</h5>
-                        <p class="text-muted mb-2 fw-bold">2023年07月13日</p>
-                        <p class="text-muted">
-                          浜小学校おやじの会と青少年指導員(汐小学域)は合同で夏のイベント『スプラバルーン@ぶたパーク』の開催を決定しました。詳細は各学校よりイベント案内を配布します。
-                        </p>
+                    <li class="timeline-item">
+                        <div class="entry-title">2025年版参加者用ガイドブックを作成しました</div>
+                        <div class="entry-date">2025年07月31日</div>
+                        <div class="entry-body">
+                            台風が心配されましたが、どうにか天候は保ちそうですね。スプラバルーン2025参加者向けのガイドブックを作成しました。
+                            スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
+                            ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
+                            特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
+                            ご協力をお願いします。
+                            <div>
+                                <a class="btn btn-outline-secondary btn-sm" href="splaballoon2025-guidebook.pdf">2025ガイドブックのダウンロード</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">2025年もスプラバルーン開催を決定しました</div>
+                        <div class="entry-date">2025年06月15日</div>
+                        <div class="entry-body">
+                            毎年大好評のスプラバルーン。今年は何と山王台小学校が参戦します。磯子の丘にある3小学校が水風船で覇権を競う大会。今回は汐見台小学校が会場です。
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">ご参加ありがとうございました</div>
+                        <div class="entry-date">2024年08月10日</div>
+                        <div class="entry-body">
+                            ご参加いただいた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
+                            限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
+                            また来年お会いしましょう！
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">2024年版参加者用ガイドブックを作成しました</div>
+                        <div class="entry-date">2024年08月01日</div>
+                        <div class="entry-body">
+                            週末の天気はいまのところ良さそうですね。スプラバルーン2024参加者向けのガイドブックを作成しました。
+                            スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
+                            ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
+                            特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
+                            ご協力をお願いします。
+                            <div>
+                                <a class="btn btn-outline-secondary btn-sm" href="splaballoon2024-guidebook.pdf">2024ガイドブックのダウンロード</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">参加者の皆さんをメーリングリストに追加しました</div>
+                        <div class="entry-date">2024年06月15日</div>
+                        <div class="entry-body">
+                            各種連絡用にメーリングリストに参加者の皆様を追加しました。当日に向けて情報を色々と流しますので、ご確認よろしくお願いします。今年はなんと170名を超える参加者がいます！
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">2024年もスプラバルーン開催を決定しました</div>
+                        <div class="entry-date">2024年06月15日</div>
+                        <div class="entry-body">
+                            昨年大好評のスプラバルーン。今年もやります！詳しくは浜小・汐小からのお知らせをご覧ください。このページではイベントに関する最新情報をお知らせします。また過去の情報も掲載していますので、参考までに、ご覧ください。
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">ご参加ありがとうございました</div>
+                        <div class="entry-date">2023年08月25日</div>
+                        <div class="entry-body">
+                            ご参加いただいた皆様ありがとうございました。子ども達も非常に楽しんだのではないかと思います。また大量のゴミがでるイベントにも拘わらず、イベント前よりもイベント後の方が公園がきれいになりました。清掃にもご協力いただきありがとうございます。
+                            限られたスタッフで運営をしておりますので、至らぬ点等あったかと思いますが、ご容赦ください。
+                            また来年お会いしましょう！
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">参加者用ガイドブックを作成しました</div>
+                        <div class="entry-date">2023年08月16日</div>
+                        <div class="entry-body">
+                            週末の天気はいまのところ良さそうですね。スプラバルーン2023参加者向けのガイドブックを作成しました。
+                            スタッフの人数が限られている中、大勢の参加者がいますので、ぜひとも保護者の皆様にもイベント運営にご協力をお願いしたいと思います。
+                            ガイドブックには当日開催予定のゲームのルール等が書かれています。ぜひともお子さんと一緒に参加前に目を通していただけますと幸いです。
+                            特に、メインイベントの水風船を使ったゲーム「スプラバルーン」はルールが少し複雑です。当日、試合前に各チームに説明しますがガイドブックにもルールが詳細に書かれていますので、なんとなく雰囲気を理解してからご参加いただくと、スムーズに試合ができると思います。
+                            ご協力をお願いします。
+                            <div>
+                                <a class="btn btn-outline-secondary btn-sm" href="splaballoon2023-guidebook.pdf">2023ガイドブックのダウンロード</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">参加募集中止中です</div>
+                        <div class="entry-date">2023年07月25日</div>
+                        <div class="entry-body">
+                            ご登録の皆様ありがとうございます。現在、想定を大幅に上回る参加登録をいただいております。小学生向けのイベントですので、参加したい皆さんが参加できるイベントを目指しておりましたが、90人を超えましたので、会場のキャパシティーの観点から、大変申し訳ございませんが、参加登録を中止とさせていただいております。
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">参加募集開始</div>
+                        <div class="entry-date">2023年07月14日</div>
+                        <div class="entry-body">
+                            2023年『スプラバルーン@ぶたパーク』の参加募集を開始しました。このページでは、イベントに関する情報を随時発信していきます。申し込み時にご記入のメールアドレスにも重要な連絡をしますが、メール不着の場合も考えられますので、こちらのページのブックマークもお願いします。
+                        </div>
+                    </li>
+
+                    <li class="timeline-item">
+                        <div class="entry-title">スプラバルーン@ぶたパーク開催決定！</div>
+                        <div class="entry-date">2023年07月13日</div>
+                        <div class="entry-body">
+                            浜小学校おやじの会と青少年指導員(汐小学域)は合同で夏のイベント『スプラバルーン@ぶたパーク』の開催を決定しました。詳細は各学校よりイベント案内を配布します。
+                        </div>
                     </li>
 
                 </ul>
-            </section>
-            <!-- Section: Timeline -->
+            </div>
+            <!-- /Past entries -->
+
         </div>
 
-        <!-- Optional JavaScript; choose one of the two! -->
-
-        <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        <!-- Option 2: Separate Popper and Bootstrap JS -->
-        <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    --></body>
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmF7bRbGNKQkH/hNNdaAMg3WVlIy" crossorigin="anonymous"></script>
+    </body>
 </html>
